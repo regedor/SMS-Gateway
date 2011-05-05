@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"> 
+<HTML> 
+<HEAD> 
+  <TITLE>A Sample Form Using POST</TITLE> 
+</HEAD> 
+ 
+<BODY BGCOLOR="#ddd"> 
+<H2 ALIGN="CENTER">A Sample Form Using POST</H2> 
+ 
+<FORM ACTION="http://0.0.0.0:4567/form"
+      METHOD="POST"> 
+  <CENTER> 
+  Message:
+  <INPUT TYPE="TEXT" NAME="message" VALUE=""><BR> 
+  Number 1:
+  <INPUT TYPE="TEXT" NAME="numbers[]" VALUE="0"><P> 
+  Number 2:
+  <INPUT TYPE="TEXT" NAME="numbers[]" VALUE="0"><P> 
+  Number 3:
+  <INPUT TYPE="TEXT" NAME="numbers[]" VALUE="0"><P> 
+  <INPUT TYPE="SUBMIT"> 
+  </CENTER> 
+</FORM> 
+ 
+</BODY> 
+</HTML>

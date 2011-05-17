@@ -18,7 +18,7 @@ post '/form' do
   @message = params[:message]
   @numbers = params[:numbers]
   @numbers.each do |a|
-#    `./gateway.rb #{a} #{@message}`
+    `./gateway.rb #{a} "#{@message}"`
     puts a + "\n"
 
 

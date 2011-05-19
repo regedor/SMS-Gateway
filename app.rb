@@ -31,7 +31,6 @@ post '/form' do
      puts a + "\n"
     end
   end
-  "No."
 end
 
 #post '/post' do

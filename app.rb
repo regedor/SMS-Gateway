@@ -5,6 +5,11 @@ require 'yaml'
 get '/hi' do
   "Hello World!"
 end
+
+get '/form' do
+  File.read(File.join('public', 'massMsg.html'))
+end
+
 #direct get 
 #get '/single/:numero/:msg' do
 #  @numero = params[:numero]

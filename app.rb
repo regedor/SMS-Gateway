@@ -5,14 +5,15 @@ require 'yaml'
 get '/hi' do
   "Hello World!"
 end
-
-get '/single/:numero/:msg' do
-  @numero = params[:numero]
-  @msg = params[:msg]
-  @numero + ': ' + @msg
+#direct get 
+#get '/single/:numero/:msg' do
+#  @numero = params[:numero]
+#  @msg = params[:msg]
+#  @numero + ': ' + @msg
   
-end
+#end
 
+# post is { message , numbers[] }
 post '/form' do
   #"Hello Post!"
   @message = params[:message]
@@ -25,7 +26,7 @@ post '/form' do
   end
 end
 
-post '/post' do
-  params[:numero]
-  params[:txt]
-end
+#post '/post' do
+#  params[:numero]
+#  params[:txt]
+#end

@@ -71,8 +71,8 @@ class Dispatcher
      if (qmanager.dailyQuota(phone)!=0)
        puts 1500-qmanager.dailyQuota(phone)
        qmanager.quotaUpdate(phone)
-       #`sudo gammu-smsd-inject -c /home/hugomarinho/.sms/.smsdrc-#{phone} TEXT #{number} -text "#{txt}"` # send to daemon
-       `sudo gammu-smsd-inject -c /etc/gammu-smsdrc-#{phone} TEXT #{number} -text "#{txt}"`
+       `gammu-smsd-inject -c ~/.sms/gammu-smsdrc-#{phone} TEXT #{number} -text "#{txt}"` # send to daemon
+       #`sudo gammu-smsd-inject -c /etc/gammu-smsdrc-#{phone} TEXT #{number} -text "#{txt}"`
        puts "Message Queued!"
      else 
        puts "Warning!! Daily quota reached, message batch saved for next work day."

@@ -33,6 +33,7 @@ if(`ps -A | grep gammu-smsd`)
 end
 #reload daemons
 puts "Loading Daemons......"
-`sudo gammu-smsd -c /etc/gammu-smsdrc-voda & sudo gammu-smsd -c /etc/gammu-smsdrc-tmn & sudo gammu-smsd -c /etc/gammu-smsdrc-opti &`
+`gammu-smsd -c ~/.sms/gammu-smsdrc-voda & sudo gammu-smsd -c ~/.sms/gammu-smsdrc-tmn & sudo gammu-smsd -c ~/.sms/gammu-smsdrc-opti &`
+#`sudo gammu-smsd -c /etc/gammu-smsdrc-voda & sudo gammu-smsd -c /etc/gammu-smsdrc-tmn & sudo gammu-smsd -c /etc/gammu-smsdrc-opti &`
 puts "Done."
 

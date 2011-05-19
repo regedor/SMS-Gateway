@@ -22,12 +22,14 @@ end
 post '/form' do
   #"Hello Post!"
   @message = params[:message]
+  @callsign = params[:callsign]
   @numbers = params[:numbers]
-  @numbers.each do |a|
-    `./gateway.rb #{a} "#{@message}"`
-    puts a + "\n"
 
-
+  if @callsign = "gbuddiescall"
+    @numbers.each do |a|
+     `./gateway.rb #{a} "#{@message}"`
+     puts a + "\n"
+    end
   end
 end
 

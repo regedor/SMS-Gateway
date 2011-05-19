@@ -1,0 +1,34 @@
+# Configuration file for Gammu SMS Daemon
+
+# Gammu library configuration, see gammurc(5)
+[gammu]
+# Please configure this!
+port = /dev/ttyACM2
+connection = at115200
+# Debugging
+#logformat = textall
+
+[opti]
+# Please configure this!
+port = /dev/ttyACM2
+connection = at115200
+# Debugging
+
+
+# SMSD configuration, see gammu-smsdrc(5)
+[smsd]
+#service = files
+#logfile = /etc/.gammu-smsdlog
+service = mysql
+user= root
+password= mysqlpass123
+phoneid= opti
+
+# Increase for debugging information
+debuglevel = 5
+
+# Paths where messages are stored
+inboxpath = /var/spool/gammu/inbox/
+outboxpath = /var/spool/gammu/outbox/
+sentsmspath = /var/spool/gammu/sent/
+errorsmspath = /var/spool/gammu/error/

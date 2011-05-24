@@ -1,6 +1,10 @@
+#!/usr/bin/env ruby
+$LOAD_PATH << './lib'
+
 require 'rubygems'
 require 'sinatra'
 require 'yaml'
+require 'gateway.rb'
 
 get '/hi' do
   "Hello World!"
@@ -10,15 +14,7 @@ get '/form' do
   File.read(File.join('public', 'massMsg.html'))
 end
 
-#direct get 
-#get '/single/:numero/:msg' do
-#  @numero = params[:numero]
-#  @msg = params[:msg]
-#  @numero + ': ' + @msg
-  
-#end
-
-# post is { message , numbers[] }
+# post is { message, key, numbers[] }
 post '/form' do
   #"Hello Post!"
   @message = params[:message]
@@ -26,14 +22,10 @@ post '/form' do
   @numbers = params[:numbers]
 
   if @key == "gbuddiescall"
+    d = Dispatcher.new()
     @numbers.each do |a|
-     `./gateway.rb #{a} "#{@message}"`
+     d.send(a,@message)
      puts a + "\n"
     end
   end
 end
-
-#post '/post' do
-#  params[:numero]
-#  params[:txt]
-#end

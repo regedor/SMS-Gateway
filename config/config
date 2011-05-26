@@ -1,5 +1,0 @@
-#Sinatra App Config
-set :port, 30001
-
-#Port: 30001
-#pw: gbuddiescall

@@ -15,9 +15,9 @@ get '/hi' do
   "Hello World!"
 end
 
-get '/form' do
-  File.read(File.join('public', 'massMsg.html'))
-end
+#get '/form' do
+# File.read(File.join('public', 'massMsg.html'))
+#end
 
 # post is { message, key, numbers[] }
 post '/form' do

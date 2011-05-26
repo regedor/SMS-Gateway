@@ -6,6 +6,9 @@ require 'sinatra'
 require 'yaml'
 require 'gateway.rb'
 
+#g=Gateway.new()
+#g.start()
+
 get '/hi' do
   "Hello World!"
 end

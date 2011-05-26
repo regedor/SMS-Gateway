@@ -7,11 +7,11 @@ class Gateway
     #kill daemons
     if(`ps -A | grep gammu-smsd`)
       puts "Killing Daemons!"
-      `sudo killall gammu-smsd`
+      `killall gammu-smsd`
     end
     #reload daemons
       puts "Loading Daemons......"
-      `gammu-smsd -c ~/.sms/gammu-smsdrc-voda & sudo gammu-smsd -c ~/.sms/gammu-smsdrc-tmn & sudo gammu-smsd -c ~/.sms/gammu-smsdrc-opti &`
+      `gammu-smsd -c ~/.sms/gammu-smsdrc-voda & gammu-smsd -c ~/.sms/gammu-smsdrc-tmn & gammu-smsd -c ~/.sms/gammu-smsdrc-opti &`
   end
 
   def send 

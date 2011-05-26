@@ -47,9 +47,46 @@ class QuotaManager
     File.open("smscount-#{phone}", "w") do |f2|  
     # use "\n" for two lines of text  
     f2.puts "#{smscount}"
+    f2.close
     end 
   end
 end
+
+class Logger
+  def smscount (phoneid)
+    File.open("./log/log-#{phoneid}", "r") do |f1|
+      line = f1.gets
+      splitline = line.split
+      timenow = Time.now.inspect
+      yymmdd = timenow.split[0]
+      timelast = splitline[2]
+      if timelast = yymmdd
+        smscounter = 1
+      else
+        smscounter =  splitline[0].to_i + 1
+      end
+      return smscounter
+  end
+  
+  def write ( user, phoneid , number , message)
+    File.open("./log/log-#{phoneid}", "rw") do |f1|
+      smscounter =  self.smscount
+      end
+      if smscount < 1500
+             f1.puts "---"
+        f1.puts "Message: #{message}"
+        f1.puts "Phone: #{number}"
+        f1.puts "User: #{user}"
+        f1.puts "PhoneId: #{phoneid}"
+        f1.puts "#{smscount} | #{timenow}"    
+        return smscount
+      else
+        return 0
+      end
+    end
+  end
+end
+
 
 #sends 1 message to 1 number	
 class Dispatcher
@@ -68,17 +105,10 @@ class Dispatcher
 
      end
      puts "DeviceID: #{phone}"
-     qmanager=QuotaManager.new()
-     if (qmanager.dailyQuota(phone)!=0)
-       puts 1500-qmanager.dailyQuota(phone)
-       qmanager.quotaUpdate(phone)
+     
        `gammu-smsd-inject -c ~/.sms/gammu-smsdrc-#{phone} TEXT #{number} -text "#{txt}"` # send to daemon
-       puts "Message Queued!"
-     else 
-       puts "Warning!! Daily quota reached, message batch saved for next work day."
-       puts "No messages were sent."	
-    
-     end
+     puts "Message Queued!"
+     return phone
   end
 end
 

@@ -9,6 +9,8 @@ require 'gateway.rb'
 #g=Gateway.new()
 #g.start()
 
+@@globalpassword = YAML.load_file("config/config.yaml")["password"].to_s
+puts @@globalpassword
 get '/hi' do
   "Hello World!"
 end
@@ -20,15 +22,16 @@ end
 # post is { message, key, numbers[] }
 post '/form' do
   #"Hello Post!"
+  @user = params[:user]
+  @password = params[:key]
   @message = params[:message]
-  @key = params[:key]
   @numbers = params[:numbers]
+  if @password == @@globalpassword
 
-  if @key == "gbuddiescall"
-    d = Dispatcher.new()
+    d = Dispatcher.new
     @numbers.each do |a|
-     d.send(a,@message)
-     puts a + "\n"
+      d.send(a,@message)
+      puts a + " - "
     end
   end
 end

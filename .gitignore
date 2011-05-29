@@ -4,5 +4,6 @@
 #sms counters
 sms-count-*
 
-#swaps
+#tmps
 *.swp
+*.swo

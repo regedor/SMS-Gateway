@@ -6,7 +6,9 @@ install mysql
   $ sudo apt-get install mysql-server mysql-client
 import gammu db
   $ mysqladmin -u root -p create sms
-  $ gunzip -c /usr/share/doc/gammu/examples/sql/mysql.sql.gz | mysql -u username -p -h localhost sms 
+  $ gunzip -c /usr/share/doc/gammu/examples/sql/mysql.sql.gz | mysql -u username -p -h localhost sms
+set message password, add "password: (yourpassword)"
+  $ vim config/config.yaml
 to config gammu mysql connection open the config files, find [smsd] and replace user=root and password=mysqlpass123 with your own
   $ vim config/gammu-smsd*
 phone config files go to ~/.sms/ (motorola v3)

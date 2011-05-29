@@ -15,13 +15,12 @@ get '/hi' do
   "Hello World!"
 end
 
-#get '/form' do
-# File.read(File.join('public', 'massMsg.html'))
-#end
+get '/form' do
+ File.read(File.join('public', 'massMsg.html'))
+end
 
-# post is { message, key, numbers[] }
+# post is {user, key, message, numbers[]}
 post '/form' do
-  #"Hello Post!"
   @user = params[:user]
   @password = params[:key]
   @message = params[:message]
@@ -29,9 +28,19 @@ post '/form' do
   if @password == @@globalpassword
 
     d = Dispatcher.new
+    l = Logger.new
     @numbers.each do |a|
-      d.send(a,@message)
-      puts a + " - "
+      phoneid = d.checkphoneid(a)
+      if ["voda","tmn","opti"].include?(phoneid)
+        if l.write( @user, phoneid, a, @message)
+          d.send(a,@message)
+
+        else
+          "Limit Reached for #{phoneid}"
+        end
+      else
+          puts "Invalid Number"
+      end
     end
   end
 end

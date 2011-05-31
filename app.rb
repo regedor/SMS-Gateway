@@ -10,7 +10,7 @@ g = Gateway.new()
 g.phoneloader
 g.start
 
-@@globalpassword = YAML.load_file("config/config.yaml")["password"].to_s
+@@users = YAML.load_file("config/config.yaml")
 @@phones= Hash["359419001297612","voda","359419001303212","tmn","356479007544261","opti"]
 
 get '/hi' do
@@ -27,8 +27,7 @@ post '/form' do
   @password = params[:key]
   @message = params[:message]
   @numbers = params[:numbers]
-  if @password == @@globalpassword
-
+  if @@users[@user]==@password
     d = Dispatcher.new
     l = Logger.new
     @numbers.each do |a|

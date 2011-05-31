@@ -4,6 +4,9 @@
 #sms counters
 sms-count-*
 
+#logs
+/log/*
+
 #tmps
 *.swp
 *.swo

@@ -6,11 +6,13 @@ require 'sinatra'
 require 'yaml'
 require 'gateway.rb'
 
-#g=Gateway.new()
-#g.start()
+g = Gateway.new()
+g.phoneloader
+g.start
 
 @@globalpassword = YAML.load_file("config/config.yaml")["password"].to_s
-puts @@globalpassword
+@@phones= Hash["359419001303212","voda","359419001297612","tmn","356479007544261","opti"]
+
 get '/hi' do
   "Hello World!"
 end
@@ -31,7 +33,7 @@ post '/form' do
     l = Logger.new
     @numbers.each do |a|
       phoneid = d.checkphoneid(a)
-      if ["voda","tmn","opti"].include?(phoneid)
+      if @@phones.values.include?(phoneid)
         if l.write( @user, phoneid, a, @message)
           d.send(a,@message)
 

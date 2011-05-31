@@ -3,6 +3,32 @@
 
 
 class Gateway
+  @@phones= Hash["359419001303212","voda","359419001297612","tmn","356479007544261","opti"]
+  @@ports= ["ttyACM0","ttyACM1","ttyACM2"]
+  
+  def phoneloader
+    @template = ''
+    home = `echo ~`.chomp
+    File.open("#{home}/.sms/gammu-smsdrc","r") do |f1|
+      f1.each_line do |line|
+        @template += line
+      end
+    end
+    @@ports.each do |port|
+      tmp = @template.gsub("%port",port)
+      File.open("#{home}/.sms/gammu-smsdrc-#{port}","w") do |f2|
+        f2.write(tmp)
+      end
+      imei = `gammu -c ~/.sms/gammu-smsdrc-#{port} --identify | grep IMEI`.split(/\s/).last
+      if @@phones.keys.include?(imei)
+        File.open("#{home}/.sms/gammu-smsdrc-#{@@phones[imei]}","w") do |f3|
+          f3.write(tmp.gsub("%phone",@@phones[imei]))
+        end
+      end
+      
+    end
+  end
+  
   def start 
     #kill daemons
     if(`ps -A | grep gammu-smsd`)
@@ -11,7 +37,9 @@ class Gateway
     end
     #reload daemons
       puts "Loading Daemons......"
-      `gammu-smsd -c ~/.sms/gammu-smsdrc-voda & gammu-smsd -c ~/.sms/gammu-smsdrc-tmn & gammu-smsd -c ~/.sms/gammu-smsdrc-opti &`
+      fork{ exec "gammu-smsd -c ~/.sms/gammu-smsdrc-voda &" }
+      fork{ exec "gammu-smsd -c ~/.sms/gammu-smsdrc-tmn &" } 
+      fork{ exec "gammu-smsd -c ~/.sms/gammu-smsdrc-opti &"}
   end
  
   def send 

@@ -91,8 +91,8 @@ class Dispatcher
 
   end
 
-  def send ( number, txt)
-       phone = self.checkphoneid ( number )
+  def send( number, txt)
+       phone = self.checkphoneid( number )
        puts "DeviceID: #{phone}"
      
        `gammu-smsd-inject -c ~/.sms/gammu-smsdrc-#{phone} TEXT #{number} -text "#{txt}"` # send to daemon

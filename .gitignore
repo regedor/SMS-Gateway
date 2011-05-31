@@ -1,9 +1,6 @@
 #config
 /config/config.yaml
 
-#sms counters
-sms-count-*
-
 #logs
 /log/*
 

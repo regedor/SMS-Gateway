@@ -21,7 +21,7 @@ connection = at115200
 service = mysql
 user= root
 password= mysqlpass123
-phoneid= voda
+phoneid= %phone
 
 # Increase for debugging information
 debuglevel = 5

@@ -21,6 +21,7 @@ class Gateway
         f2.write(tmp)
       end
       imei = `gammu -c ~/.sms/gammu-smsdrc-#{port} --identify | grep IMEI`.split(/\s/).last
+
       if @@phones.keys.include?(imei)
         File.open("#{home}/.sms/gammu-smsdrc-#{@@phones[imei]}","w") do |f3|
           f3.write(tmp.gsub("%phone",@@phones[imei]))

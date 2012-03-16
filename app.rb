@@ -13,9 +13,9 @@ g.start
 @@users = YAML.load_file("config/config.yaml")
 @@phones= Hash["359419001297612","voda","359419001303212","tmn","356479007544261","opti"]
 
-get '/hi' do
-  "Hello World!"
-end
+#get '/hi' do
+  
+#end
 
 get '/form' do
  File.read(File.join('public', 'massMsg.html'))
@@ -27,9 +27,9 @@ post '/form' do
   @password = params[:key]
   @message = params[:message]
   @numbers = params[:numbers]
-  if @@users[@user]==@password
+  if @@users['user']==@password
     d = Dispatcher.new
-    l = Logger.new
+    l = Loggeri.new
     @numbers.each do |a|
       phoneid = d.checkphoneid(a)
       if @@phones.values.include?(phoneid)
@@ -43,5 +43,6 @@ post '/form' do
           puts "Invalid Number"
       end
     end
+  else puts "password errada: #{@password}, seria #{@@users[@user]}"
   end
 end

@@ -58,7 +58,7 @@ class Gateway
 end
 
 
-class Logger
+class Loggeri
   def smscount (phoneid)
     File.open("./log/log-#{phoneid}", "r") do |f1|
       if line = f1.gets

@@ -18,9 +18,10 @@ connection = at115200
 [smsd]
 #service = files
 #logfile = /etc/.gammu-smsdlog
-service = mysql
-user= root
-password= mysqlpass123
+service = sql
+driver = native_mysql
+user = root
+password = akamarulight
 phoneid= %phone
 
 # Increase for debugging information

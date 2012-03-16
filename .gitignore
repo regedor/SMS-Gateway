@@ -1,8 +1,8 @@
 #config
-/config/config.yaml
+config/config.yaml
 
 #logs
-/log/log-*
+log/log-*
 
 #tmps
 *.swp

@@ -29,20 +29,13 @@ post '/form' do
   @numbers = params[:numbers]
   if @@users['user']==@password
     d = Dispatcher.new
-    l = Loggeri.new
     @numbers.each do |a|
       phoneid = d.checkphoneid(a)
       if @@phones.values.include?(phoneid)
-        if l.write( @user, phoneid, a, @message)
-          d.send(a,@message)
-
-        else
-          "Limit Reached for #{phoneid}"
-        end
+           d.send(a,@message,@user)
       else
           puts "Invalid Number"
       end
     end
-  else puts "password errada: #{@password}, seria #{@@users[@user]}"
   end
 end

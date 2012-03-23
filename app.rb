@@ -27,7 +27,7 @@ post '/form' do
   @password = params[:key]
   @message = params[:message]
   @numbers = params[:numbers]
-  if @@users['user']==@password
+  if @@users['password']==@password && @@users['user']==@user
     d = Dispatcher.new
     @numbers.each do |a|
       phoneid = d.checkphoneid(a)

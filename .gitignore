@@ -8,3 +8,7 @@ log/log-*
 *.swp
 *.swo
 *.swn
+
+#other
+Gemfile
+config.ru

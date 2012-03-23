@@ -10,5 +10,7 @@ log/log-*
 *.swn
 
 #other
+Gemfile.lock
 Gemfile
 config.ru
+public/favicon.ico

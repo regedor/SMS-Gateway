@@ -1,10 +1,11 @@
 #!/usr/bin/env ruby
 #sms gateway script
+require 'behaviour.rb'
 
 class Gateway
   def initialize(options)
-    raise "Arg missing" unless @phones = options[:phones]
-    raise "Arg missing" unless @ports  = options[:ports]
+    raise ArgumentError, "options[:phones] is missing." unless @phones = options[:phones]
+    raise ArgumentError, "options[:ports] is missing." unless @ports  = options[:ports]
     phoneloader
     start
   end
@@ -24,7 +25,7 @@ class Gateway
   
   # kills gammu daemons, initiates new
   def start 
-    `killall gammu-smsd` && puts "Killing Daemons!" 
+    `killall gammu-smsd` && puts("Killing Daemons!")
     puts "Loading Daemons......"
     @phone.values.each do |provider|
       fork{ exec "gammu-smsd -c #{datafoler+provider} &" }
@@ -42,9 +43,3 @@ class Gateway
     end
   end
 end
-
-
-
-
-
-

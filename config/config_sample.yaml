@@ -1,0 +1,17 @@
+phones: 
+  359419001297612: "vodafone"
+  359419001303212: "tmn"
+  356479007544261: "optimus"
+ports: ["ttyACM0","ttyACM1","ttyACM2"]
+datafolder: "~/tmp/"
+
+
+users:
+  username:
+    password: "password"  
+    behaviour:
+      type: pt-three
+      options:
+        vodafone: "1500W"
+        tmn:  "1500D"
+        optimus: "1500W"

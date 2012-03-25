@@ -20,8 +20,8 @@ connection = at115200
 #logfile = /etc/.gammu-smsdlog
 service = sql
 driver = native_mysql
-user = root
-password = akamarulight
+user = yourmysqluser
+password = yourmysqlpassword
 phoneid= %phone
 
 # Increase for debugging information

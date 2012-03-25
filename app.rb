@@ -4,38 +4,30 @@ $LOAD_PATH << './lib'
 require 'rubygems'
 require 'sinatra'
 require 'yaml'
+
 require 'gateway.rb'
 
-g = Gateway.new()
-g.phoneloader
-g.start
-
-@@users = YAML.load_file("config/config.yaml")
-@@phones= Hash["359419001297612","voda","359419001303212","tmn","356479007544261","opti"]
-
-#get '/hi' do
-  
-#end
-
-get '/form' do
- File.read(File.join('public', 'massMsg.html'))
-end
+@config  = YAML.load_file("config/config.yaml")
+@gateway = Gateway.new :phones    => config['phones']
+                       :ports     => config['ports']
 
 # post is {user, key, message, numbers[]}
 post '/form' do
-  @user = params[:user]
-  @password = params[:key]
-  @message = params[:message]
-  @numbers = params[:numbers]
-  if @@users['password']==@password && @@users['user']==@user
-    d = Dispatcher.new
-    @numbers.each do |a|
-      phoneid = d.checkphoneid(a)
-      if @@phones.values.include?(phoneid)
-           d.send(a,@message,@user)
+  user = config['users'][params[:user]]
+  return "Invalid User" unless user
+  return if user['password'] == params[:key]
+    params[:numbers].each do |number|       
+      if @gateway.send(user, number, params[:message])
+        "Sent"
       else
-          puts "Invalid Number"
+        "Invalid Number"
       end
     end
+  else 
+    "Invalid Password"
   end
+end
+
+get '/form' do
+  File.read(File.join('public', 'massMsg.html'))
 end

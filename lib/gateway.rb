@@ -3,23 +3,27 @@
 require 'behaviour.rb'
 
 class Gateway
-  def initialize(options)
-    raise ArgumentError, "options[:phones] is missing." unless @phones = options[:phones]
-    raise ArgumentError, "options[:ports] is missing." unless @ports  = options[:ports]
+  def initialize(config)
+    raise ArgumentError, "config should be an hash" unless config.is_a? Hash
+    raise ArgumentError, "options[:phones] is missing." unless @phones      = config['phones']
+    raise ArgumentError, "options[:ports] is missing."  unless @ports       = config['ports'].split(";")
+    raise ArgumentError, "options[:datafolder] is missing."  unless @datafolder  = config['datafolder']
     phoneloader
     start
   end
-
+  
   #loads phones that are connected, recreates config files
   def phoneloader
-    template = IO.read( datafolder + "gammu-smsdrc")
+    template = IO.read( @datafolder + "gammu-smsdrc")
     @ports.each do |port|
-      IO.write (datafolder + port), template.gsub("%port",port)
-      imei = `gammu -c #{datafolder + port} --identify | grep IMEI`.split(/\s/).last
+
+
+      IO.write((@datafolder + port), template.gsub("%port",port))
+      imei = `gammu -c #{@datafolder + port} --identify | grep IMEI`.split(/\s/).last
       if @phones.keys.include?(imei)
-        IO.write (datafolder + @phones[imei]), IO.read(datafolder + port).gsub("%phone",@phones[imei]) 
+        IO.write((@datafolder + @phones[imei]), IO.read(@datafolder + port).gsub("%phone",@phones[imei]))
       end 
-      system "rm #{datafolder + port}"
+      system "rm #{@datafolder + port}"
     end
   end
   
@@ -27,8 +31,8 @@ class Gateway
   def start 
     `killall gammu-smsd` && puts("Killing Daemons!")
     puts "Loading Daemons......"
-    @phone.values.each do |provider|
-      fork{ exec "gammu-smsd -c #{datafoler+provider} &" }
+    @phones.values.each do |provider|
+      fork{ exec "gammu-smsd -c #{@datafolder+provider} &" }
     end
   end
   
@@ -41,5 +45,11 @@ class Gateway
     else 
       #LOGIT que alguem tentou mas nao foi para a fila
     end
+  end
+end
+
+class IO
+  def self.write(filepath, text)
+    File.open(filepath, "w") { |f| f << text }
   end
 end

@@ -1,5 +1,5 @@
 #config
-config/config.yaml
+config/config.yml
 
 #logs
 log/log-*

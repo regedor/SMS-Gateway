@@ -22,14 +22,14 @@ module Behaviour
   # validate number and check id, returns which operator/phoneid should send this message
   def self.pt_checkphoneid( number )
     case number
-      when /(((^\+)35191(.......))|(^91(.......)))/
+      when /(((^\+)35191(.......)$)|(^91(.......)$))/
         phone = "vodafone"
-      when /(((^\+)3519(6|2)(.......))|(^9(6|2)(.......)))/
+      when /(((^\+)3519(6|2)(.......)$)|(^9(6|2)(.......)$))/
         phone = "tmn"
-      when /(((^\+)35193(.......))|(^93(.......)))/
+      when /(((^\+)35193(.......)$)|(^93(.......)$))/
         phone = "optimus"
       else 
-        nil
+        "Invalid Number"
     end
   end
   

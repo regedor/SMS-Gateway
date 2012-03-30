@@ -6,20 +6,29 @@ describe Behaviour do
   end 
 
   describe ".pt_checkphoneid" do
-    #vodafone_numbers = ["912345678","+351912345678"]
-    it "should return vodafone when given 91 followed by 7 random digits" do
-      Behaviour.pt_checkphoneid((910000000 + rand(9999999)).to_s).should eq("vodafone")
-      
+  #success
+    ["1234567","8901234"].each do |number|
+      ["+351",""].each do |prefix|
+        it "should return vodafone when given #{prefix}91#{number}" do
+          Behaviour.pt_checkphoneid(prefix + "91" + number ).should eq("vodafone")
+        end
+        it "should return tmn when given #{prefix}96#{number}" do
+          Behaviour.pt_checkphoneid(prefix + "96" + number ).should eq("tmn")
+        end
+        it "should return tmn when given #{prefix}92#{number}" do
+          Behaviour.pt_checkphoneid(prefix + "92" + number ).should eq("tmn")
+        end
+        it "should return optimus when given #{prefix}93#{number}" do
+          Behaviour.pt_checkphoneid(prefix + "93" + number ).should eq("optimus")
+        end
+      end
     end
-    it "should return tmn when given 96 followed by 7 random digits" do
-      Behaviour.pt_checkphoneid((960000000 + rand(9999999)).to_s).should eq("tmn")
+  #failure
+    it "should return invalid number when given number with more or less than 9 digits after prefix 9123456999" do
+      Behaviour.pt_checkphoneid("9123456999").should eq("Invalid Number")
     end
-    it "should return tmn when given 92 followed by 7 random digits" do
-      Behaviour.pt_checkphoneid((920000000 + rand(9999999)).to_s).should eq("tmn")
-    end
-    it "should return optimus when given 93 followed by 7 random digits" do
-      Behaviour.pt_checkphoneid((930000000 + rand(9999999)).to_s).should eq("optimus")
+    it "should return invalid number when given number with invalid operator id 951234567" do
+      Behaviour.pt_checkphoneid("951234567").should eq("Invalid Number")
     end
   end
 end
-

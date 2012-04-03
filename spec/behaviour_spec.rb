@@ -24,9 +24,13 @@ describe Behaviour do
       end
     end
   #failure
-    it "should return invalid number when given number with more or less than 9 digits after prefix 9123456999" do
+    it "should return invalid number when given number with more than 9 digits after prefix 9123456999" do
       Behaviour.pt_checkphoneid("9123456999").should eq("Invalid Number")
     end
+    it "should return invalid number when given number with less than 9 digits after prefix 91234569" do
+      Behaviour.pt_checkphoneid("91234569").should eq("Invalid Number")
+    end
+
     it "should return invalid number when given number with invalid operator id 951234567" do
       Behaviour.pt_checkphoneid("951234567").should eq("Invalid Number")
     end

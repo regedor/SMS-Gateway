@@ -5,8 +5,8 @@ require 'behaviour.rb'
 class Gateway
   def initialize(config)
     raise ArgumentError, "config should be an hash" unless config.is_a? Hash
-    raise ArgumentError, "options[:phones] is missing." unless @phones      = config['phones']
-    raise ArgumentError, "options[:ports] is missing."  unless @ports       = config['ports'].split(";")
+    raise ArgumentError, "options[:phones] is missing." unless @phones           = config['phones']
+    raise ArgumentError, "options[:ports] is missing."  unless @ports            = config['ports'].split(";")
     raise ArgumentError, "options[:datafolder] is missing."  unless @datafolder  = config['datafolder']
     phoneloader
     start

@@ -2,11 +2,13 @@ require 'spec_helper'
 
 describe Gateway do  
   valid_args = {
-    :phones => { 
+    "phones" => { 
       "359419001297612" => "vodafone",
       "359419001303212" => "tmn",
       "356479007544261" => "optimus"},
-    :ports  => ["ttyACM0","ttyACM1","ttyACM2"]}
+    "ports"  => "ttyACM0;ttyACM1;ttyACM2",
+    "datafolder" => "/home/hugomarinho/tmp/"
+}
   
   describe ".new" do
     it "should raise ArgumentError if options dont include phones and ports" do

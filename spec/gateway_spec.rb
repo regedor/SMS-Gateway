@@ -7,8 +7,35 @@ describe Gateway do
       "359419001303212" => "tmn",
       "356479007544261" => "optimus"},
     "ports"  => "ttyACM0;ttyACM1;ttyACM2",
-    "datafolder" => "/home/hugomarinho/tmp/"
-}
+    "datafolder" => "./tmp/"
+  }
+
+  invalid_args_wrong_path_to_datafolder = {
+    "phones" => { 
+      "359419001297612" => "vodafone",
+      "359419001303212" => "tmn",
+      "356479007544261" => "optimus"},
+    "ports"  => "ttyACM0;ttyACM1;ttyACM2",
+    "datafolder" => "./"
+  }
+ 
+  def factory_valid_gateway_without_gammu_started
+    valid_args = {
+    "phones" => { 
+      "359419001297612" => "vodafone",
+      "359419001303212" => "tmn",
+      "356479007544261" => "optimus"},
+    "ports"  => "ttyACM0;ttyACM1;ttyACM2",
+    "datafolder" => "./tmp/"
+    }
+
+    Gateway.new valid_args, :initialize_gammu => false
+  end
+
+  def factory_clean_tmp_folder
+  
+  end
+  
   
   describe ".new" do
     it "should raise ArgumentError if options dont include phones and ports" do
@@ -20,10 +47,47 @@ describe Gateway do
       Gateway.any_instance.should_receive(:start).once
       Gateway.new(valid_args) 
     end
+    it "it should start not load the necessary stuff if option :initialize_gammu is false" do
+      Gateway.any_instance.should_not_receive(:phoneloader)
+      Gateway.any_instance.should_not_receive(:start)
+      Gateway.new valid_args, :initialize_gammu => false
+    end
   end
   
   describe "#phoneloader" do
-  
+    it "should raise Error if file is not in given datafolder" do
+      g = Gateway.new invalid_args_wrong_path_to_datafolder , :initialize_gammu => false
+      expect { g.phoneloader }.to raise_error()
+    end
+
+    it "should read gammu config file" do
+      #pending "test missing"
+      File.should_receive(:open).with("./tmp/gammu-smsdrc", "r")
+      #IO.should_receive(:read) 
+       #.with("./tmp/gammu-smsdrc")
+    end
+
+    it "should run gammu detect to port and return valid IMEI" do
+      pending "incomplete test"
+      g = factory_valid_gateway_without_gammu_started
+      #Gateway.any_instance.should_receive(:`).with("gammu -c")
+      #g.should_receive(:`) 
+       #.with("gammu -c ./tmp/ttyACM0 --identify | grep IMEI") #.and_return("")
+      
+    end
+    
+    it "should read example gammu-smsd config file to a template" do
+      
+    end
+
+    it "should read example gammu-smsd config file to a template" do
+      #g = factory_valid_gateway_without_gammu_started
+      #clean_tmp
+      #g.phoneloader
+       
+    end
+
+
   end
   
   describe "#start" do

@@ -5,6 +5,7 @@ config/config.yml
 log/log-*
 
 #tmps
+tmp/*
 *.swp
 *.swo
 *.swn
@@ -14,3 +15,4 @@ Gemfile.lock
 Gemfile
 config.ru
 public/favicon.ico
+

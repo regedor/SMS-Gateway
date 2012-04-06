@@ -3,23 +3,23 @@
 require 'behaviour.rb'
 
 class Gateway
-  def initialize(config)
-    raise ArgumentError, "config should be an hash" unless config.is_a? Hash
-    raise ArgumentError, "options[:phones] is missing." unless @phones           = config['phones']
-    raise ArgumentError, "options[:ports] is missing."  unless @ports            = config['ports'].split(";")
+  def initialize(config, options={:initialize_gammu => true})
+    raise ArgumentError, "config should be an hash"          unless config.is_a? Hash
+    raise ArgumentError, "options[:phones] is missing."      unless @phones      = config['phones']
+    raise ArgumentError, "options[:ports] is missing."       unless @ports       = config['ports'].split(";")
     raise ArgumentError, "options[:datafolder] is missing."  unless @datafolder  = config['datafolder']
-    phoneloader
-    start
+    unless options[:initialize_gammu] == false
+      phoneloader
+      start
+    end
   end
   
   #loads phones that are connected, recreates config files
   def phoneloader
-    template = IO.read( @datafolder + "gammu-smsdrc")
+    raise IOError, "config file could not be read" unless template = IO.read( @datafolder + "gammu-smsdrc")
     @ports.each do |port|
-
-
       IO.write((@datafolder + port), template.gsub("%port",port))
-      imei = `gammu -c #{@datafolder + port} --identify | grep IMEI`.split(/\s/).last
+      imei = `gammu -c #{@datafolder + port} --identify | grep IMEI")`.split(/\s/).last
       if @phones.keys.include?(imei)
         IO.write((@datafolder + @phones[imei]), IO.read(@datafolder + port).gsub("%phone",@phones[imei]))
       end 

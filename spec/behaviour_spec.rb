@@ -35,4 +35,8 @@ describe Behaviour do
       Behaviour.pt_checkphoneid("951234567").should eq("Invalid Number")
     end
   end
+
+  describe ".pt_default" do
+    pending "should have tests"  
+  end
 end

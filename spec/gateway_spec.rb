@@ -61,10 +61,10 @@ describe Gateway do
     end
 
     it "should read gammu config file" do
-      #pending "test missing"
+      pending "incomplete test"
       File.should_receive(:open).with("./tmp/gammu-smsdrc", "r")
       #IO.should_receive(:read) 
-       #.with("./tmp/gammu-smsdrc")
+      #.with("./tmp/gammu-smsdrc")
     end
 
     it "should run gammu detect to port and return valid IMEI" do
@@ -77,15 +77,18 @@ describe Gateway do
     end
     
     it "should read example gammu-smsd config file to a template" do
-      
+      pending "no tests yet"  
     end
 
-    it "should read example gammu-smsd config file to a template" do
-      #g = factory_valid_gateway_without_gammu_started
-      #clean_tmp
-      #g.phoneloader
-       
+    #valid_args[:ports]
+    "ttyACM0;ttyACM1;ttyACM2".split(";").each do |port|
+      it "should send system call to delete temporary config from port: #{port} from ./tmp/" do
+        g = Gateway.new valid_args, :initialize_gammu => false # factory_valid_gateway_without_gammu_started
+        g.should_receive("system").with("rm ./tmp/" + port)
+      end
     end
+
+    
 
 
   end

@@ -83,18 +83,30 @@ describe Gateway do
     #valid_args[:ports]
     "ttyACM0;ttyACM1;ttyACM2".split(";").each do |port|
       it "should send system call to delete temporary config from port: #{port} from ./tmp/" do
+        pending "Incomplete test"
         g = Gateway.new valid_args, :initialize_gammu => false # factory_valid_gateway_without_gammu_started
         g.should_receive("system").with("rm ./tmp/" + port)
       end
     end
+    
 
     
 
 
   end
   
-  describe "#start" do
-    
+  describe "start" do
+    it "should send system call to kill gammu processes" do
+      pending "system call test incomplete"
+      g= Gateway.new valid_args
+      g.should_receive(:'`').with("killall gammu-smsd")
+    end
+    it "should fork to new gammu-smsd process" do
+      pending "system call test incomplete"
+      g= Gateway.new valid_args
+      g.should_receive(:fork)
+    end
+
   end
   
   describe "#send" do
@@ -105,6 +117,7 @@ describe Gateway do
  # %w{h1 h2 h3 h4 h5 p notice warning error}.each do |method|
  #   it { should respond_to(method).with(1).argument } 
  # end
+
  # 
  # # .h1*(str) should output
  # %w{h1 h2 h3 h4 h5 p notice warning error debug}.each do |method|

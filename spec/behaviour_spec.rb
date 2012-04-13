@@ -1,6 +1,17 @@
 require 'spec_helper'
 
 describe Behaviour do
+  valid_options = {
+    "phone" => "vodafone",
+    "tmn" => "1500D",
+    "optimus" => "1500W",
+    "vodafone" => "1500W",
+    "phones" => {
+      "359419001297612" => "vodafone",
+      "359419001303212" => "tmn",
+      "356479007544261" => "optimus"
+    }
+  }
   it "should have tests" do
     pending "write tests or I will kneecap you"
   end 
@@ -36,7 +47,22 @@ describe Behaviour do
     end
   end
 
+  describe ".pt_single" do
+    it "should return phone set in options as sender, if number is valid pt number" do
+      Behaviour.pt_single("912345678",valid_options).should eq(valid_options['phone'])
+    end
+    it "should return Invalid Phone in config if given invalid option" do
+      invalid_options = valid_options
+      invalid_options.store("phone","tmen")
+      Behaviour.pt_single("912345678",invalid_options).should eq("Invalid Phone in config")
+    end
+  end
+
   describe ".pt_default" do
     pending "should have tests"  
+    it "should receive valid phone from checkphoneid" do
+    #pending "needs better syntax"
+      Behaviour.pt_default("912345678",valid_options).should eq(Behaviour.pt_checkphoneid("912345678"))
+    end
   end
 end

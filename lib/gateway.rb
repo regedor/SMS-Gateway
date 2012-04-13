@@ -32,7 +32,9 @@ class Gateway
     `killall gammu-smsd` && puts("Killing Daemons!")
     puts "Loading Daemons......"
     @phones.values.each do |provider|
-      fork{ exec "gammu-smsd -c #{@datafolder+provider} &" }
+      fork do
+        exec "gammu-smsd -c #{@datafolder+provider} &"
+      end
     end
   end
   

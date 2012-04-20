@@ -6,16 +6,30 @@ describe Gateway do
       "359419001297612" => "vodafone",
       "359419001303212" => "tmn",
       "356479007544261" => "optimus"},
-    "ports"  => "ttyACM0;ttyACM1;ttyACM2",
+    "ports"      => "ttyACM0;ttyACM1;ttyACM2",
     "datafolder" => "./tmp/"
   }
+  
+  
+  valid_args_single = {
+    "phones" => { 
+      "359419001297612" => "vodafone",
+      "359419001303212" => "tmn",
+      "356479007544261" => "optimus"},
+    "ports"      => "ttyACM0;ttyACM1;ttyACM2",
+    "datafolder" => "./tmp/",
+    "behaviour"  => {
+      "type"            => "pt_single",
+      "phone"           => "vodafone"}
+  } 
 
   invalid_args_wrong_path_to_datafolder = {
     "phones" => { 
       "359419001297612" => "vodafone",
       "359419001303212" => "tmn",
-      "356479007544261" => "optimus"},
-    "ports"  => "ttyACM0;ttyACM1;ttyACM2",
+      "356479007544261" => "optimus"
+    },
+    "ports"      => "ttyACM0;ttyACM1;ttyACM2",
     "datafolder" => "./"
   }
  
@@ -25,7 +39,7 @@ describe Gateway do
       "359419001297612" => "vodafone",
       "359419001303212" => "tmn",
       "356479007544261" => "optimus"},
-    "ports"  => "ttyACM0;ttyACM1;ttyACM2",
+    "ports"      => "ttyACM0;ttyACM1;ttyACM2",
     "datafolder" => "./tmp/"
     }
 
@@ -50,29 +64,30 @@ describe Gateway do
     it "it should start not load the necessary stuff if option :initialize_gammu is false" do
       Gateway.any_instance.should_not_receive(:phoneloader)
       Gateway.any_instance.should_not_receive(:start)
-      Gateway.new valid_args, :initialize_gammu => false
+      factory_valid_gateway_without_gammu_started
     end
   end
   
   describe "#phoneloader" do
+    subject { factory_valid_gateway_without_gammu_started }
+
     it "should raise Error if file is not in given datafolder" do
       g = Gateway.new invalid_args_wrong_path_to_datafolder , :initialize_gammu => false
       expect { g.phoneloader }.to raise_error()
     end
 
     it "should read gammu config file" do
-      pending "incomplete test"
-      File.should_receive(:open).with("./tmp/gammu-smsdrc", "r")
-      #IO.should_receive(:read) 
-      #.with("./tmp/gammu-smsdrc")
+      pending "check file not being read"
+      IO.should_receive(:read).with("./tmp/gammu-smsdrc")
+      subject.phoneloader
     end
 
-    it "should run gammu detect to port and return valid IMEI" do
-      pending "incomplete test"
-      g = factory_valid_gateway_without_gammu_started
-      #Gateway.any_instance.should_receive(:`).with("gammu -c")
-      #g.should_receive(:`) 
-       #.with("gammu -c ./tmp/ttyACM0 --identify | grep IMEI") #.and_return("")
+    it "should run gammu detect to port and return valid IMEI if exists" do
+      #pending "incomplete test"
+      #g = factory_valid_gateway_without_gammu_started
+      subject.should_receive(:`).with("gammu -c ./tmp/ttyACM0 --identify | grep IMEI")
+      subject.phoneloader
+       
       
     end
     
@@ -84,8 +99,9 @@ describe Gateway do
     "ttyACM0;ttyACM1;ttyACM2".split(";").each do |port|
       it "should send system call to delete temporary config from port: #{port} from ./tmp/" do
         pending "Incomplete test"
-        g = Gateway.new valid_args, :initialize_gammu => false # factory_valid_gateway_without_gammu_started
-        g.should_receive("system").with("rm ./tmp/" + port)
+        #g = factory_valid_gateway_without_gammu_started
+        subject.should_receive("system").with("rm ./tmp/" + port)
+        subject.phoneloader
       end
     end
     
@@ -96,21 +112,28 @@ describe Gateway do
   end
   
   describe "start" do
+    subject { Gateway.new valid_args }
     it "should send system call to kill gammu processes" do
-      pending "system call test incomplete"
-      g= Gateway.new valid_args
-      g.should_receive(:'`').with("killall gammu-smsd")
+      #pending "system call test incomplete"
+      subject.should_receive(:'`').with("killall gammu-smsd")
+      subject.start
+      
     end
     it "should fork to new gammu-smsd process" do
-      pending "system call test incomplete"
-      g= Gateway.new valid_args
-      g.should_receive(:fork)
+      #pending "system call test incomplete"
+      #g= Gateway.new valid_args
+      subject.should_receive(:fork).at_least(1).times
+      subject.start
     end
 
   end
   
   describe "#send" do
-    
+    it "should go get a phone from Behaviour" do
+      pending "incomplete"
+      g = factory_valid_gateway_without_gammu_started
+      g.should_receive("Behaviour.select_phone") if valid_args[:phone].nil?
+    end 
   end
 
  # # should respond_to .method with 1 argument

@@ -2,19 +2,16 @@ require 'spec_helper'
 
 describe Behaviour do
   valid_options = {
-    "phone" => "vodafone",
-    "tmn" => "1500D",
-    "optimus" => "1500W",
+    "phone"    => "vodafone",
+    "tmn"      => "1500D",
+    "optimus"  => "1500W",
     "vodafone" => "1500W",
-    "phones" => {
+    "phones"   => {
       "359419001297612" => "vodafone",
       "359419001303212" => "tmn",
       "356479007544261" => "optimus"
-    }
+   }
   }
-  it "should have tests" do
-    pending "write tests or I will kneecap you"
-  end 
 
   describe ".pt_checkphoneid" do
   #success
@@ -29,7 +26,7 @@ describe Behaviour do
         it "should return tmn when given #{prefix}92#{number}" do
           Behaviour.pt_checkphoneid(prefix + "92" + number ).should eq("tmn")
         end
-        it "should return optimus when given #{prefix}93#{number}" do
+    it "should return optimus when given #{prefix}93#{number}" do
           Behaviour.pt_checkphoneid(prefix + "93" + number ).should eq("optimus")
         end
       end
@@ -58,8 +55,7 @@ describe Behaviour do
     end
   end
 
-  describe ".pt_default" do
-    pending "should have tests"  
+  describe ".pt_default" do  
     it "should receive valid phone from checkphoneid" do
     #pending "needs better syntax"
       Behaviour.pt_default("912345678",valid_options).should eq(Behaviour.pt_checkphoneid("912345678"))

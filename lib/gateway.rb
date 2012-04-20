@@ -19,7 +19,7 @@ class Gateway
     raise IOError, "config file could not be read" unless template = IO.read( @datafolder + "gammu-smsdrc")
     @ports.each do |port|
       IO.write((@datafolder + port), template.gsub("%port",port))
-      imei = `gammu -c #{@datafolder + port} --identify | grep IMEI")`.split(/\s/).last
+      imei = `gammu -c #{@datafolder + port} --identify | grep IMEI`.split(/\s/).last
       if @phones.keys.include?(imei)
         IO.write((@datafolder + @phones[imei]), IO.read(@datafolder + port).gsub("%phone",@phones[imei]))
       end 

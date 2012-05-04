@@ -8,13 +8,13 @@ module Behaviour
    
   def self.pt_single(number, options)
     if pt_checkphoneid(number) 
-       a = Hash.new
-       a = options['phones']
-       if a.value?(options['phone'])
-         options['phone']
-       else
-         "Invalid Phone in config"      
-       end
+      a = Hash.new
+      a = options['phones']
+      if a.value?(options['phone'])
+        options['phone']
+      else
+        "Invalid Phone in config"      
+      end
     else
       nil
     end

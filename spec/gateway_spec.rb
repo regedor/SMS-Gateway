@@ -87,7 +87,7 @@ describe Gateway do
     end
     #subject{ Gateway.new valid_args}
     it "should run gammu detect to port and return valid IMEI if exists" do
-      #pending "incomplete test"
+      pending "incomplete test"
       #g = factory_valid_gateway_without_gammu_started
       subject.should_receive(:`).with("gammu -c ./tmp/ttyACM0 --identify | grep IMEI")
       subject.phoneloader
@@ -137,7 +137,7 @@ describe Gateway do
   
   describe "#send" do
     it "should go get a phone from Behaviour if no phone is given" do
-      #pending "incomplete"
+      pending "incomplete"
       #g = factory_valid_gateway_without_gammu_started
       subject.should_receive("Behaviour.select_phone").with("912345678") # if valid_args[:phone].nil?
       #Behaviour.should_receive("select_phone")

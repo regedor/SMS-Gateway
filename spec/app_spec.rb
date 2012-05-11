@@ -14,5 +14,8 @@ describe "SMS Gateway" do
     get '/form'
     last_response.should be_ok
   end
+  it "should call gateway"
+    pending "moar tests darnit!"
+  end
 end
 

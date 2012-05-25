@@ -13,7 +13,9 @@ require 'gateway.rb'
 # post is {user, key, message, numbers[]}
 post '/form' do
   user = @config['users'][params[:user]]
+  #user = nil
   return "Invalid User" unless user
+  #return params[:user] unless user
   return(if user['password'] == params[:key]
     params[:numbers].each do |number|       
       if @gateway.send(user, number, params[:message])

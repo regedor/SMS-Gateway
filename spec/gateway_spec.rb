@@ -118,110 +118,106 @@ describe Gateway do
 
   end
   
-  describe "start" do
-    subject { Gateway.new valid_args }
-    it "should send system call to kill gammu processes" do
-      #pending "system call test incomplete"
-      subject.should_receive(:'`').with("killall gammu-smsd")
-      subject.start
-      
-    end
-    it "should fork to new gammu-smsd process" do
-      #pending "system call test incomplete"
-      #g= Gateway.new valid_args
-      subject.should_receive(:fork).at_least(1).times
-      subject.start
-    end
+ 
+ describe "start" do
+   subject { Gateway.new valid_args }
+   it "should send system call to kill gammu processes" do
+     #pending "system call test incomplete"
+     subject.should_receive(:'`').with("killall gammu-smsd")
+     subject.start
+     
+   end
+   it "should fork to new gammu-smsd process" do
+     #pending "system call test incomplete"
+     #g= Gateway.new valid_args
+     subject.should_receive(:fork).at_least(1).times
+     subject.start
+   end
 
-  end
-  
-  describe "#send" do
-    it "should go get a phone from Behaviour if no phone is given" do
-      pending "incomplete"
-      #g = factory_valid_gateway_without_gammu_started
-      subject.should_receive("Behaviour.select_phone").with("912345678") # if valid_args[:phone].nil?
-      #Behaviour.should_receive("select_phone")
-      subject.send(valid_agrs[:users[:username]],"912345678","test message")
-    end 
-  end
+ end
+ 
+ describe "#send" do
+   it "should go get a phone from Behaviour if no phone is given" do
+     pending "incomplete"
+     #g = factory_valid_gateway_without_gammu_started
+     subject.should_receive("Behaviour.select_phone").with("912345678") # if valid_args[:phone].nil?
+     #Behaviour.should_receive("select_phone")
+     subject.send(valid_agrs[:users[:username]],"912345678","test message")
+   end 
+ end
 
- # # should respond_to .method with 1 argument
- # %w{h1 h2 h3 h4 h5 p notice warning error}.each do |method|
- #   it { should respond_to(method).with(1).argument } 
- # end
+# # should respond_to .method with 1 argument
+# %w{h1 h2 h3 h4 h5 p notice warning error}.each do |method|
+#   it { should respond_to(method).with(1).argument } 
+# end
 
- # 
- # # .h1*(str) should output
- # %w{h1 h2 h3 h4 h5 p notice warning error debug}.each do |method|
- #   ["text", "coisas loucas", "pumba\npumba"].each do |text|
- #     it ".#{method}(#{text.inspect}) should output #{text.inspect} (case insensitive)" do
- #       Polvo::Printer.send method, text
- #       @output.should =~ /#{text}/i
- #     end
- #   end
- # end
- # 
- # # .h1*(str) should capitalize
- # %w{h1 h2 h3 h4 h5}.each do |method|
- #   {"mouse" => "MOUSE"}.each do |input, output|
- #     it ".#{method}(#{input.inspect}) should output #{output.inspect}" do
- #       Polvo::Printer.send method, input
- #       @output.should =~ /#{output}/
- #     end
- #   end
- # end
- #  
- # # .wait(text) show text and do a gets" do
- # it ".wait(text) show text and do a gets" do
- #   text = "warning message"
- #   $stdin.should_receive(:gets).once
- #   subject.wait(text)
- #   @output.should =~ /#{text}/
- # end
- # 
- # # .confirm(question) should return true/false when user answers yes/no " do
- # {"yes"=> true, "y" => true, "YES" => true, "Y" => true,
- #  "no" => false,"n" => false,"NO" => false, "N" => false}.each do |answer, value|
- #   it ".confirm should return #{value} when user answers '#{answer}' " do
- #     question = "Queres bananas?"
- #     $stdin.should_receive(:gets).and_return(answer)
- #     subject.confirm(question).should == value
- #   end
- # end
- # 
- # 
- # it "should have the method ask that returns the user input" do
- #   question, answer = "Queres bananas?", "Sim"
- #   $stdin.should_receive(:gets).and_return(answer)
- #   $stdout.should_receive(:write).with("\n#{question}")
- #   subject.ask(question).should == answer  
- # end
- # 
- # describe ".menu" do
- #   subject {Polvo::Printer}
- #   items          = ["Option 1","Option 2","Option 3","Option 4"]
- #   valid_answer   = "3"
- #   invalid_answer = "7"
- #   
- #   it "should not acept invalid answer" do
- #     $stdin.should_receive(:gets).and_return(invalid_answer,valid_answer)
- #     subject.menu(items).should == valid_answer
- #   end
- #   
- #   it "should acept invalid answer if extended_option is true" do
- #     $stdin.should_receive(:gets).and_return(invalid_answer)
- #     subject.menu(items, :extended_option => true).should == invalid_answer
- #   end
- #   
- #   it "should have more tests" do
- #     pending "write tests or I will kneecap you"
- #   end
- #   
- # end
- # 
- # it ".clear should have tests" do
- #   pending "write tests or I will kneecap you"
- # end
-
-end
-
+# 
+# # .h1*(str) should output
+# %w{h1 h2 h3 h4 h5 p notice warning error debug}.each do |method|
+#   ["text", "coisas loucas", "pumba\npumba"].each do |text|
+#     it ".#{method}(#{text.inspect}) should output #{text.inspect} (case insensitive)" do
+#       Polvo::Printer.send method, text
+#       @output.should =~ /#{text}/i
+#     end
+#   end
+# end
+# 
+# # .h1*(str) should capitalize
+# %w{h1 h2 h3 h4 h5}.each do |method|
+#   {"mouse" => "MOUSE"}.each do |input, output|
+#     it ".#{method}(#{input.inspect}) should output #{output.inspect}" do
+#       Polvo::Printer.send method, input
+#       @output.should =~ /#{output}/
+#     end
+#   end
+# end
+#  
+# # .wait(text) show text and do a gets" do
+# it ".wait(text) show text and do a gets" do
+#   text = "warning message"
+#   $stdin.should_receive(:gets).once
+#   subject.wait(text)
+#   @output.should =~ /#{text}/
+# end
+# 
+# # .confirm(question) should return true/false when user answers yes/no " do
+# {"yes"=> true, "y" => true, "YES" => true, "Y" => true,
+#  "no" => false,"n" => false,"NO" => false, "N" => false}.each do |answer, value|
+#   it ".confirm should return #{value} when user answers '#{answer}' " do
+#     question = "Queres bananas?"
+#     $stdin.should_receive(:gets).and_return(answer)
+#     subject.confirm(question).should == value
+#   end
+# end
+# 
+# 
+# it "should have the method ask that returns the user input" do
+#   question, answer = "Queres bananas?", "Sim"
+#   $stdin.should_receive(:gets).and_return(answer)
+#   $stdout.should_receive(:write).with("\n#{question}")
+#   subject.ask(question).should == answer  
+# end
+# 
+# describe ".menu" do
+#   subject {Polvo::Printer}
+#   items          = ["Option 1","Option 2","Option 3","Option 4"]
+#   valid_answer   = "3"
+#   invalid_answer = "7"
+#   
+#   it "should not acept invalid answer" do
+#     $stdin.should_receive(:gets).and_return(invalid_answer,valid_answer)
+#     subject.menu(items).should == valid_answer
+#   end
+#   
+#   it "should acept invalid answer if extended_option is true" do
+#     $stdin.should_receive(:gets).and_return(invalid_answer)
+#     subject.menu(items, :extended_option => true).should == invalid_answer
+#   end
+#   
+#   it "should have more tests" do
+#     pending "write tests or I will kneecap you"
+#   end
+#   
+# end
+# 
+# it ".clear should have tests" do

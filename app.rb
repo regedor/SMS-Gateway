@@ -7,12 +7,12 @@ require 'yaml'
 
 require 'gateway.rb'
 
-@config  = YAML.load_file("config/config.yml")
-@gateway = Gateway.new @config
+@@config = YAML.load_file("config/config.yml")
+@gateway = Gateway.new @@config
 
 # post is {user, key, message, numbers[]}
 post '/form' do
-  user = @config['users'][params[:user]]
+  user = @@config['users'][params[:user]]
   #user = nil
   return "Invalid User" unless user
   #return params[:user] unless user

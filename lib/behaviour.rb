@@ -29,10 +29,19 @@ module Behaviour
     def_phone = pt_checkphoneid(number)
     count = options['phones'][def_phone][0..-1]
     timespan = options['phones'][def_phone].split('').last
+    case timespan
+    when /w|W|s|S/
+      #weekly / semanal
+      # check number of sent items by week -> select Count(ID) from sentitems where  Week(SendingDateTime) = Week(Now()) AND Year(SendingDateTime) = Year(Now());
+    when /M|m/
+      #montly / mensal
+    when /D|d/
+      #daily / diario
+      # check number of sent items by day -> select Count(ID) from sentitems where DayOfYear(SendingDateTime) = DayOfYear(Now());
+    end
   end
-  # check number of sent items by day -> select Count(ID) from sentitems where DayOfYear(SendingDateTime) = DayOfYear(Now());
-
-  # check number of sent items by week -> select Count(ID) from sentitems where  Week(SendingDateTime) = Week(Now()) AND Year(SendingDateTime) = Year(Now());
+  
+  
 
   # validate number and check id, returns which operator/phoneid should send this message
   def self.pt_checkphoneid( number )
